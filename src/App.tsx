@@ -1,3 +1,5 @@
+import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
+
 export function App() {
   return (
     <>
@@ -29,8 +31,35 @@ export function App() {
             </div>
           </div>
         </div>
-
       </header>
+
+      <main>
+        <div className="px-3 space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-zinc-900">Dados do Cliente</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div>
+                <p className="text-zinc-800">Renato Pereira</p>
+                <p className="text-sm">434.654.123-90</p>
+              </div>
+              <div>
+                <p className="text-zinc-800">renato.pereira@email.com</p>
+                <p className="text-sm">(11) 98376-6343</p>
+              </div>
+              <div>
+                <p className="text-zinc-800">Endereço de Cobrança</p>
+                <p className="text-sm">Rua Oscar Freire, 333 São Paulo - SP - 00000-000</p>
+              </div>
+              <div>
+                <p className="text-zinc-800">Endereço de Entrega</p>
+                <p className="text-sm">Rua Oscar Freire, 333 São Paulo - SP - 00000-000</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
     </>
   )
 }
