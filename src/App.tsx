@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./components/ui/card";
+import { Separator } from "./components/ui/separator";
 
 export function App() {
   return (
@@ -26,8 +27,8 @@ export function App() {
           <div className="flex flex-col gap-1">
             <span className="text-zinc-400 text-sm font-semibold">Entregas relacionadas</span>
             <div className="flex justify-start items-center gap-2">
-              <span className="inline-block border rounded-sm border-lime-600 text-lime-500 py-1 px-2 uppercase text-xs">f1</span>
-              <span className="inline-block border rounded-sm border-lime-600 text-lime-500 py-1 px-2 uppercase text-xs">f2</span>
+              <span className="inline-block border rounded-sm border-lime-600 text-lime-600 py-1 px-2 uppercase text-xs">f1</span>
+              <span className="inline-block border rounded-sm border-lime-600 text-lime-600 py-1 px-2 uppercase text-xs">f2</span>
             </div>
           </div>
         </div>
@@ -57,6 +58,43 @@ export function App() {
                 <p className="text-sm">Rua Oscar Freire, 333 São Paulo - SP - 00000-000</p>
               </div>
             </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-zinc-900">Dados do Pagamento</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-9">
+              <div className="space-y-3">
+                <div className="flex justify-between">
+                  <p className="text-zinc-800">Subtotal</p>
+                  <p className="text-sm">R$ 500,00</p>
+                </div>
+                <div className="flex justify-between">
+                  <p className="text-zinc-800">Frete</p>
+                  <p className="text-sm">R$ 200,00</p>
+                </div>
+                <div className="flex justify-between">
+                  <p className="text-zinc-800">Desconto</p>
+                  <p className="text-sm text-red-500">- R$ 10,00</p>
+                </div>
+              </div>
+              <div className="flex justify-between">
+                <p className="text-zinc-800">Valor total</p>
+                <p className="text-sm text-lime-600">R$ 510,00</p>
+              </div>
+            </CardContent>
+            <CardFooter className="flex flex-col">
+              <Separator className="h-0.5" />
+
+              <div className="flex justify-between items-end w-full mt-3">
+                <div className="space-y-1">
+                  <p className="text-zinc-400">Método de Pagamento</p>
+                  <p className="text-zinc-800 text-sm">VISA **** **** **** 3455 Exp. 23/02</p>
+                </div>
+                <p className="text-sm">1x de R$510,00</p>
+              </div>
+            </CardFooter>
           </Card>
         </div>
       </main>
