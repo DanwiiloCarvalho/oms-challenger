@@ -34,8 +34,8 @@ export function App() {
         </div>
       </header>
 
-      <main>
-        <div className="px-3 space-y-4">
+      <main className="px-3 space-y-4">
+        <div className="space-y-4">
           <Card>
             <CardHeader>
               <CardTitle className="text-lg font-semibold text-zinc-900">Dados do Cliente</CardTitle>
@@ -50,11 +50,11 @@ export function App() {
                 <p className="text-sm">(11) 98376-6343</p>
               </div>
               <div>
-                <p className="text-zinc-800">Endereço de Cobrança</p>
+                <p className="text-zinc-400">Endereço de Cobrança</p>
                 <p className="text-sm">Rua Oscar Freire, 333 São Paulo - SP - 00000-000</p>
               </div>
               <div>
-                <p className="text-zinc-800">Endereço de Entrega</p>
+                <p className="text-zinc-400">Endereço de Entrega</p>
                 <p className="text-sm">Rua Oscar Freire, 333 São Paulo - SP - 00000-000</p>
               </div>
             </CardContent>
@@ -97,6 +97,28 @@ export function App() {
             </CardFooter>
           </Card>
         </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg font-semibold text-zinc-900">Dados do Pedido</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex flex-col">
+                <p className="text-zinc-400">Comprado em</p>
+                <p className="text-sm">05 de Fevereiro de 2019, às 19h30</p>
+              </div>
+              <div className="flex flex-col">
+                <p className="text-zinc-400">Ponto de Venda</p>
+                <p className="text-sm">E-commerce</p>
+              </div>
+              <div className="flex flex-col">
+                <p className="text-zinc-400">Modalidade de Entrega</p>
+                <p className="text-sm">F1 Envio pela loja, F2 Retira em Loja</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </main>
     </>
   )
