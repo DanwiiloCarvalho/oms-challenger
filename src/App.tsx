@@ -13,7 +13,7 @@ export function App() {
           <div></div>
         </div>
 
-        <div className="flex justify-between px-3 py-3">
+        <div className="flex justify-between px-3 py-3 lg:justify-start lg:gap-10">
           <div className="flex flex-col gap-1">
             <span className="text-zinc-400 text-sm font-semibold">Pedido</span>
             <span>22071559</span>
@@ -38,8 +38,8 @@ export function App() {
       </header>
 
       <main className="px-3 pb-3 space-y-4">
-        <div className="space-y-4">
-          <Card>
+        <div className="space-y-4 lg:flex lg:justify-between lg:gap-6 lg:space-y-0">
+          <Card className="shadow-lg lg:flex-1">
             <CardHeader>
               <CardTitle className="text-lg font-semibold text-zinc-900">Dados do Cliente</CardTitle>
             </CardHeader>
@@ -63,7 +63,7 @@ export function App() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="shadow-lg">
             <CardHeader>
               <CardTitle className="text-lg font-semibold text-zinc-900">Dados do Pagamento</CardTitle>
             </CardHeader>
@@ -90,7 +90,7 @@ export function App() {
             <CardFooter className="flex flex-col">
               <Separator className="h-0.5" />
 
-              <div className="flex justify-between items-end w-full mt-3">
+              <div className="flex flex-wrap justify-between items-end w-full mt-3 lg:gap-28">
                 <div className="space-y-1">
                   <p className="text-zinc-400">Método de Pagamento</p>
                   <p className="text-zinc-800 text-sm">VISA **** **** **** 3455 Exp. 23/02</p>
@@ -101,12 +101,12 @@ export function App() {
           </Card>
         </div>
 
-        <Card>
+        <Card className="shadow-lg">
           <CardHeader>
             <CardTitle className="text-lg font-semibold text-zinc-900">Dados do Pedido</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
+          <CardContent className="space-y-3 lg:flex lg:justify-start lg:gap-20 lg:items-center lg:space-y-0">
+            {/* <div className="space-y-3"> */}
               <div className="flex flex-col">
                 <p className="text-zinc-400">Comprado em</p>
                 <p className="text-sm">05 de Fevereiro de 2019, às 19h30</p>
@@ -119,11 +119,11 @@ export function App() {
                 <p className="text-zinc-400">Modalidade de Entrega</p>
                 <p className="text-sm">F1 Envio pela loja, F2 Retira em Loja</p>
               </div>
-            </div>
+            {/* </div> */}
           </CardContent>
         </Card>
 
-        <Collapsible className="group">
+        <Collapsible className="group shadow-lg">
           <Card className="overflow-hidden">
             <div className="flex justify-center items-center h-20">
               <CollapsibleTrigger asChild className="border-r self-stretch">
@@ -133,7 +133,7 @@ export function App() {
 
               </CollapsibleTrigger>
 
-              <div className="flex justify-between w-full px-4">
+              <div className="flex justify-between w-full px-4 lg:justify-start lg:gap-20">
                 <div className="flex flex-col gap-1">
                   <p className="text-lime-600">Entrega F1</p>
                   <p className="text-sm">22071559-F1</p>
@@ -147,9 +147,9 @@ export function App() {
                 </div>
               </div>
             </div>
-            <CollapsibleContent className="p-6 space-y-4 border-t">
+            <CollapsibleContent className="p-6 space-y-4 border-t lg:space-y-7">
               <h2 className="text-lg font-semibold text-zinc-900">Dados da Entrega</h2>
-              <div className="space-y-4">
+              <div className="space-y-4 lg:flex lg:justify-start lg:flex-wrap lg:gap-x-24 lg:gap-y-6 lg:space-y-0">
                 <div>
                   <p className="text-zinc-400">Retirado por</p>
                   <p>Alexandre de Oliveira Martins</p>
@@ -192,41 +192,21 @@ export function App() {
 
               <h2 className="text-lg font-semibold text-zinc-900">Detalhes da Entrega</h2>
 
-              {/* <table className="border border-collapse">
-                <thead className="bg-zinc-300">
-                  <tr>
-                    <td className="py-2 border-none">produto</td>
-                    <td className="py-2 border-none">sku</td>
-                    <td className="py-2 border-none">qtd.</td>
-                    <td className="py-2 border-none">preço</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Tenis Coca Coca Loretto - Feminino</td>
-                    <td>AR384675</td>
-                    <td>2</td>
-                    <td>Subtotal</td>
-                  </tr>
-                </tbody>
-              </table> */}
-
-
-              <Table className="border-collapse rounded-t-lg overflow-hidden">
+              <Table className="border-collapse rounded-t-2xl overflow-hidden">
                 <TableHeader>
-                  <TableRow className="bg-slate-200">
-                    <TableHead className="min-w-fit">Produto</TableHead>
-                    <TableHead>sku</TableHead>
-                    <TableHead>qtd.</TableHead>
-                    <TableHead className="text-left">Preço</TableHead>
+                  <TableRow className="bg-slate-200 uppercase">
+                    <TableHead className="min-w-fit font-semibold">Produto</TableHead>
+                    <TableHead className="font-semibold">sku</TableHead>
+                    <TableHead className="font-semibold lg:text-center">qtd.</TableHead>
+                    <TableHead className="text-left font-semibold">Preço</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   <TableRow className="border-none">
                     <TableCell className="font-medium align-top">
-                      <div className="flex flex-col items-start space-y-4">
+                      <div className="flex flex-col items-start space-y-4 lg:flex-row lg:items-center lg:space-y-0 lg:gap-4">
                         {/* <div> */}
-                        <img src="src/assets/tenisCocaLoretto.webp" alt="" width={50} className="border-2 rounded p-1" />
+                        <img src="src/assets/tenisCocaLoretto.webp" alt="" className="border-2 rounded p-1 w-14 lg:w-16" />
                         {/* </div> */}
                         <div className="text-sm text-nowrap text-slate-700">
                           <p>Tenis Coca Coca Loretto - Feminino</p>
@@ -260,9 +240,9 @@ export function App() {
 
                   <TableRow className="border-none">
                     <TableCell className="font-medium align-top">
-                      <div className="flex flex-col items-start space-y-4">
+                      <div className="flex flex-col items-start space-y-4 lg:flex-row lg:items-center lg:space-y-0 lg:gap-4">
                         {/* <div> */}
-                        <img src="src/assets/tenisCocaLoretto.webp" alt="" width={50} className="border-2 rounded p-1" />
+                        <img src="src/assets/tenisCocaLoretto.webp" alt="" className="border-2 rounded p-1 w-14 lg:w-16" />
                         {/* </div> */}
                         <div className="text-sm text-nowrap text-slate-700">
                           <p>Tênis New Balance ML501 - Masculino</p>
