@@ -1,4 +1,5 @@
 import { FulFillmentIcon } from "./fulfillmentIcon"
+import { Status } from "./status"
 
 interface HeaderProps {
     orderId: number
@@ -22,10 +23,7 @@ export function Header({ orderId, orderStatus, fulfillments }: HeaderProps) {
 
                 <div className="flex flex-col gap-1">
                     <span className="text-zinc-400 text-sm font-semibold">Status do pedido</span>
-                    <div className="flex justify-start items-center gap-2">
-                        <span className="inline-block rounded-full w-4 h-4 bg-yellow-500 border border-yellow-600"></span>
-                        <span className="text-sm text-zinc-500">{ orderStatus }</span>
-                    </div>
+                    <Status status="PENDING" />
                 </div>
 
                 <div className="flex flex-col gap-1">
