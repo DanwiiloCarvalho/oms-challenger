@@ -3,7 +3,7 @@ import { Status } from "./status"
 
 interface HeaderProps {
     orderId: number
-    orderStatus: string
+    orderStatus: 'PENDING' | 'DELIVERED' | 'SEPARATION'
     fulfillments: string[]
 }
 export function Header({ orderId, orderStatus, fulfillments }: HeaderProps) {
@@ -23,7 +23,7 @@ export function Header({ orderId, orderStatus, fulfillments }: HeaderProps) {
 
                 <div className="flex flex-col gap-1">
                     <span className="text-zinc-400 text-sm font-semibold">Status do pedido</span>
-                    <Status status="PENDING" />
+                    <Status status={orderStatus} />
                 </div>
 
                 <div className="flex flex-col gap-1">

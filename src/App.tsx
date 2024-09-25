@@ -16,7 +16,7 @@ export function App() {
   formatDate("2019-03-05T19:30:00.000Z")
   return (
     <>
-      <Header orderId={22071559} orderStatus="Pendente" fulfillments={fulfillments} />
+      <Header orderId={22071559} orderStatus="PENDING" fulfillments={fulfillments} />
 
       <main className="px-3 pb-3 space-y-4">
         <div className="space-y-4 lg:flex lg:justify-between lg:gap-6 lg:space-y-0">
