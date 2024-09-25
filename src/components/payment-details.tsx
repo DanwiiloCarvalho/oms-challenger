@@ -1,5 +1,6 @@
 import { Separator } from "@radix-ui/react-separator";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import { formatCurrency } from "@/utils/format-currency";
 
 interface PaymentMethod {
     type?: string
@@ -29,20 +30,20 @@ export function PaymentDetails({ subTotal, freightCosts, discount, total, ...pro
                 <div className="space-y-3">
                     <div className="flex justify-between">
                         <p className="text-zinc-800">Subtotal</p>
-                        <p className="text-sm">R$ {subTotal}</p>
+                        <p className="text-sm">{formatCurrency(subTotal)}</p>
                     </div>
                     <div className="flex justify-between">
                         <p className="text-zinc-800">Frete</p>
-                        <p className="text-sm">R$ {freightCosts}</p>
+                        <p className="text-sm">{formatCurrency(freightCosts)}</p>
                     </div>
                     <div className="flex justify-between">
                         <p className="text-zinc-800">Desconto</p>
-                        <p className="text-sm text-red-500">- R$ {discount}</p>
+                        <p className="text-sm text-red-500">- {formatCurrency(discount)}</p>
                     </div>
                 </div>
                 <div className="flex justify-between">
                     <p className="text-zinc-800">Valor total</p>
-                    <p className="text-sm text-lime-600">R$ {total}</p>
+                    <p className="text-sm text-lime-600">{formatCurrency(total)}</p>
                 </div>
             </CardContent>
             <CardFooter className="flex flex-col">
@@ -53,7 +54,7 @@ export function PaymentDetails({ subTotal, freightCosts, discount, total, ...pro
                         <p className="text-zinc-400">Método de Pagamento</p>
                         <p className="text-zinc-800 text-sm">{brand} {number} Exp. {expiresAt}</p>
                     </div>
-                    <p className="text-sm">{installments}x de R${amount}</p>
+                    <p className="text-sm">{installments}x de {formatCurrency(amount)}</p>
                 </div>
             </CardFooter>
         </Card>
