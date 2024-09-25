@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
-interface Address {
+export interface Address {
     address1: string
     number: string
     city: string
