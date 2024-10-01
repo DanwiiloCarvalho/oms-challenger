@@ -2,7 +2,7 @@ import { Separator } from "@radix-ui/react-separator";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { formatCurrency } from "@/utils/format-currency";
 
-interface PaymentMethod {
+export interface PaymentMethod {
     type?: string
     brand: string
     amount: number

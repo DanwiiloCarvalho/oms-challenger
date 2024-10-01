@@ -8,7 +8,7 @@ import { Status } from "./status";
 import { formatCurrency } from "@/utils/format-currency";
 import { FulfillmentRow } from "./fulfillment-row";
 
-interface FreightCosts {
+export interface FreightCosts {
     totalTime: number
     totalPrice: number
     deliveryEstimatedDate: string
