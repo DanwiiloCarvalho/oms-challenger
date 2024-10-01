@@ -1,10 +1,20 @@
+import { Address } from "./customer-data"
+import { FreightCosts } from "./fulfillment"
 import { FulFillmentIcon } from "./fulfillmentIcon"
 import { Status } from "./status"
 
 interface HeaderProps {
-    orderId: number
+    orderId: string | null
     orderStatus: 'PENDING' | 'DELIVERED' | 'SEPARATION'
-    fulfillments: string[]
+    fulfillments: {
+        id: string
+        status: 'PENDING' | 'DELIVERED' | 'SEPARATION'
+        name?: string
+        type?: string
+        freightCosts: FreightCosts
+        orderId: string
+        deliveryAddress?: Address
+    }[]
 }
 export function Header({ orderId, orderStatus, fulfillments }: HeaderProps) {
 
@@ -30,7 +40,7 @@ export function Header({ orderId, orderStatus, fulfillments }: HeaderProps) {
                     <span className="text-zinc-400 text-sm font-semibold">Entregas relacionadas</span>
                     <div className="flex justify-start items-center gap-2">
                         {
-                            fulfillments.map(name => <FulFillmentIcon key={name} fulfillmentId={name} />)
+                            fulfillments.map(value => <FulFillmentIcon key={value.id} fulfillmentId={value.id} />)
                         }
                     </div>
                 </div>
