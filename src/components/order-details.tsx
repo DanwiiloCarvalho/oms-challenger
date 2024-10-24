@@ -1,9 +1,9 @@
-import { formatDate } from "@/utils/fomat-date";
+import { formatDateInFull } from "@/utils/fomat-date-in-full";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 interface OrderDetailsProps {
-    pointOfSale: string
-    purchasedIn: string
+    pointOfSale: string | undefined
+    purchasedIn: string | undefined
 }
 
 export function OrderDetails({ purchasedIn, pointOfSale }: OrderDetailsProps) {
@@ -15,7 +15,7 @@ export function OrderDetails({ purchasedIn, pointOfSale }: OrderDetailsProps) {
             <CardContent className="space-y-3 lg:flex lg:justify-start lg:gap-20 lg:items-center lg:space-y-0">
                 <div className="flex flex-col">
                     <p className="text-zinc-400">Comprado em</p>
-                    <p className="text-sm">{formatDate(purchasedIn)}</p>
+                    <p className="text-sm">{formatDateInFull(purchasedIn as string)}</p>
                 </div>
                 <div className="flex flex-col">
                     <p className="text-zinc-400">Ponto de Venda</p>
