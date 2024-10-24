@@ -1,12 +1,13 @@
+import { useAppSelector } from "@/store";
+import { formatCurrency } from "@/utils/format-currency";
+import { formatDateDayMonthYear } from "@/utils/format-date-day-month-year";
 import { ChevronDown } from "lucide-react";
+import { FulfillmentRow } from "./fulfillment-row";
+import { Status } from "./status";
 import { Card } from "./ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 import { Separator } from "./ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
-import { Address } from "./customer-data";
-import { Status } from "./status";
-import { formatCurrency } from "@/utils/format-currency";
-import { FulfillmentRow } from "./fulfillment-row";
 
 export interface FreightCosts {
     totalTime: number
@@ -15,16 +16,20 @@ export interface FreightCosts {
 }
 
 interface FulfillmentProps {
-    fulfillmentId: string
-    status: 'PENDING' | 'DELIVERED' | 'SEPARATION'
-    name?: string
-    type?: string
-    freightCosts: FreightCosts
-    orderId: string
-    deliveryAddress?: Address
+    id: string | undefined
+    index: number
+    orderId: string | null
 }
 
-export function Fulfillment({ status, ...props }: FulfillmentProps) {
+export function Fulfillment({ index, orderId }: FulfillmentProps) {
+    const fulfillment = useAppSelector(state => state.delivery.fulfillments[index])
+
+    const units = fulfillment.items.reduce((units, currentUnit) => units + currentUnit.quantity, 0)
+    const itemsQuantity = fulfillment.items.length < 10 ? fulfillment.items.length.toString().padStart(2, '0') : fulfillment.items.length
+
+    const freightCost = fulfillment.freightCosts.totalPrice / fulfillment.items.length
+    const subTotal = fulfillment.items.reduce((subtotal, item) => subtotal + item.price * item.quantity, 0)
+    const totalValue = subTotal + fulfillment.freightCosts.totalPrice
 
     return (
         <Collapsible className="group shadow-lg">
@@ -39,13 +44,13 @@ export function Fulfillment({ status, ...props }: FulfillmentProps) {
 
                     <div className="flex justify-between w-full px-4 lg:justify-start lg:gap-20">
                         <div className="flex flex-col gap-1">
-                            <p className="text-lime-600">Entrega F1</p>
-                            <p className="text-sm">{props.orderId}-{props.fulfillmentId}</p>
+                            <p className="text-lime-600">Entrega {fulfillment.id}</p>
+                            <p className="text-sm">{orderId}-{fulfillment.id}</p>
                         </div>
                         <div className="flex flex-col gap-1">
                             <p className="text-zinc-400">Status da entrega</p>
                             <div className="flex justify-start items-center gap-2">
-                                <Status status={status} />
+                                <Status status={fulfillment.status} />
                             </div>
                         </div>
                     </div>
@@ -55,7 +60,7 @@ export function Fulfillment({ status, ...props }: FulfillmentProps) {
                     <div className="space-y-4 lg:flex lg:justify-start lg:flex-wrap lg:gap-x-24 lg:gap-y-6 lg:space-y-0">
                         <div>
                             <p className="text-zinc-400">Retirado por</p>
-                            <p>{props.name}</p>
+                            <p>{fulfillment.shipment.name}</p>
                             <p>845.983.233-90</p>
                         </div>
                         <div>
@@ -64,15 +69,13 @@ export function Fulfillment({ status, ...props }: FulfillmentProps) {
                         </div>
                         <div>
                             <p className="text-zinc-400">Data Previsão Cliente</p>
-                            <p>{props.freightCosts?.deliveryEstimatedDate}</p>
+                            <p>{formatDateDayMonthYear(fulfillment.freightCosts.deliveryEstimatedDate)}</p>
                         </div>
                         <div>
                             <p className="text-zinc-400">Endereço de Entrega</p>
                             <address>
-                                {/* <p>Rua Oscar Freire, 333 São Paulo - SP</p> */}
-                                <p>{props.deliveryAddress?.address1}, {props.deliveryAddress?.number} {props.deliveryAddress?.city} - {props.deliveryAddress?.state}</p>
-                                {/* <p>03745-001</p> */}
-                                <p>{props.deliveryAddress?.zip}</p>
+                                <p>{fulfillment.shipment.address1}, {fulfillment.shipment.number} {fulfillment.shipment.city} - {fulfillment.shipment.state}</p>
+                                <p>{fulfillment.shipment.zip}</p>
                             </address>
                         </div>
                         <div>
@@ -81,15 +84,15 @@ export function Fulfillment({ status, ...props }: FulfillmentProps) {
                         </div>
                         <div>
                             <p className="text-zinc-400">Tipo</p>
-                            <p>{props.type}</p>
+                            <p>{fulfillment.type}</p>
                         </div>
                         <div>
                             <p className="text-zinc-400">Preço do frete</p>
-                            <p>{formatCurrency(props.freightCosts?.totalPrice)}</p>
+                            <p>{formatCurrency(fulfillment.freightCosts.totalPrice)}</p>
                         </div>
                         <div>
                             <p className="text-zinc-400">Data Previsão Transportadora</p>
-                            <p>{props.freightCosts?.deliveryEstimatedDate}</p>
+                            <p>{formatDateDayMonthYear(fulfillment.freightCosts.deliveryEstimatedDate)}</p>
                         </div>
                     </div>
 
@@ -107,28 +110,24 @@ export function Fulfillment({ status, ...props }: FulfillmentProps) {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            
-                            <FulfillmentRow
-                                imageUrl="src/assets/tenisCocaLoretto.webp"
-                                productName="Tenis Coca Coca Loretto - Feminino"
-                                productColor="Branco, Cinza"
-                                productSize="39"
-                                sku="AR384675"
-                                quantity={2}
-                                freightCost={5}
-                                price={100}
-                            />
 
-                            <FulfillmentRow
-                                imageUrl="src/assets/tenisCocaLoretto.webp"
-                                productName="Tênis New Balance ML501 - Masculino"
-                                productColor="Preto"
-                                productSize="40"
-                                sku="AR384677"
-                                quantity={1}
-                                freightCost={5}
-                                price={100}
-                            />
+                            {
+                                fulfillment.items.map(item => {
+                                    return (
+                                        <FulfillmentRow 
+                                            key={item.sku} 
+                                            productName={item.name}
+                                            productColor={item.color}
+                                            productSize={item.size}
+                                            sku={item.sku}
+                                            quantity={item.quantity}
+                                            freightCost={freightCost}
+                                            price={item.price}
+                                            imageUrl={item.image}
+                                        />
+                                    )
+                                })
+                            }
 
                             <TableRow>
                                 <TableCell />
@@ -140,22 +139,26 @@ export function Fulfillment({ status, ...props }: FulfillmentProps) {
                                         <TableBody>
                                             <TableRow className="border-none w-full flex justify-between items-center">
                                                 <TableCell className="text-slate-700">
-                                                    03 unidades de 02 itens
+                                                    {units < 10 ? units.toString().padStart(2, '0') : units} unidades de {itemsQuantity} itens
                                                 </TableCell>
                                             </TableRow>
 
                                             <TableRow className="border-none w-full flex justify-between items-center">
                                                 <TableHead scope="row" className="text-nowrap flex items-center text-slate-700">Subtotal</TableHead>
-                                                <TableCell className="text-nowrap flex items-center text-slate-700">R$ 300,00</TableCell>
+                                                <TableCell className="text-nowrap flex items-center text-slate-700">
+                                                    {formatCurrency(subTotal)}
+                                                </TableCell>
                                             </TableRow>
 
                                             <TableRow className="border-none w-full flex justify-between items-center">
                                                 <TableHead scope="row" className="text-nowrap flex items-center text-slate-700">Frete Total</TableHead>
-                                                <TableCell className="text-nowrap text-slate-700">R$ 10,00</TableCell>
+                                                <TableCell className="text-nowrap text-slate-700">
+                                                    {formatCurrency(fulfillment.freightCosts.totalPrice)}
+                                                </TableCell>
                                             </TableRow>
                                             <TableRow className="border-none w-full flex justify-between items-center mt-10">
                                                 <TableHead scope="row" className="text-nowrap flex items-center text-slate-700">Valor total</TableHead>
-                                                <TableCell className="text-nowrap text-slate-700">R$ 310,00</TableCell>
+                                                <TableCell className="text-nowrap text-slate-700">{formatCurrency(totalValue)}</TableCell>
                                             </TableRow>
                                         </TableBody>
                                     </Table>

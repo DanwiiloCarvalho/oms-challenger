@@ -12,14 +12,17 @@ export interface PaymentMethod {
 }
 
 interface PaymentDetailsProps {
-    subTotal: number
-    freightCosts: number
-    discount: number
-    total: number
-    paymentMethod: PaymentMethod
+    subTotal: number | undefined
+    freightCosts: number | undefined
+    discount: number | undefined
+    total: number | undefined
+    paymentMethod: PaymentMethod | undefined
 }
 
 export function PaymentDetails({ subTotal, freightCosts, discount, total, ...props }: PaymentDetailsProps) {
+    if (typeof props.paymentMethod === 'undefined') {
+        return
+    }
     const { brand, number, expiresAt, installments, amount } = props.paymentMethod
     return (
         <Card className="shadow-lg">
@@ -30,20 +33,20 @@ export function PaymentDetails({ subTotal, freightCosts, discount, total, ...pro
                 <div className="space-y-3">
                     <div className="flex justify-between">
                         <p className="text-zinc-800">Subtotal</p>
-                        <p className="text-sm">{formatCurrency(subTotal)}</p>
+                        <p className="text-sm">{formatCurrency(subTotal as number)}</p>
                     </div>
                     <div className="flex justify-between">
                         <p className="text-zinc-800">Frete</p>
-                        <p className="text-sm">{formatCurrency(freightCosts)}</p>
+                        <p className="text-sm">{formatCurrency(freightCosts as number)}</p>
                     </div>
                     <div className="flex justify-between">
                         <p className="text-zinc-800">Desconto</p>
-                        <p className="text-sm text-red-500">- {formatCurrency(discount)}</p>
+                        <p className="text-sm text-red-500">- {formatCurrency(discount as number)}</p>
                     </div>
                 </div>
                 <div className="flex justify-between">
                     <p className="text-zinc-800">Valor total</p>
-                    <p className="text-sm text-lime-600">{formatCurrency(total)}</p>
+                    <p className="text-sm text-lime-600">{formatCurrency(total as number)}</p>
                 </div>
             </CardContent>
             <CardFooter className="flex flex-col">

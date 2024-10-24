@@ -9,15 +9,23 @@ export interface Address {
 }
 
 interface CustomerDataProps {
-    name: string
-    cpf: string
-    email: string
-    telephone: string
-    billingAddress: Address
-    shipmentAddress: Address
+    name: string | undefined
+    cpf: string | undefined
+    email: string | undefined
+    telephone: string | undefined
+    billingAddress: Address | undefined
+    shipmentAddress: Address | undefined
 }
 
 export function CustomerData({ billingAddress, shipmentAddress, ...props }: CustomerDataProps) {
+    if(typeof billingAddress === 'undefined') {
+        return
+    }
+
+    if(typeof shipmentAddress === 'undefined') {
+        return
+    }
+
     const { address1, number, city, state, zip } = billingAddress
     const { 
         address1: shipmentAddress1, 
@@ -43,7 +51,6 @@ export function CustomerData({ billingAddress, shipmentAddress, ...props }: Cust
                 </div>
                 <div>
                     <p className="text-zinc-400">Endereço de Cobrança</p>
-                    {/* <p className="text-sm">Rua Oscar Freire, 333 São Paulo - SP - 00000-000</p> */}
                     <p className="text-sm">{address1}, {number} {city} - {state} - {zip}</p>
                 </div>
                 <div>
