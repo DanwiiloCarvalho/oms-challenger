@@ -1,5 +1,5 @@
 import { Address } from '@/components/customer-data'
-import { FreightCosts } from '@/components/fulfillment'
+import { FreightCosts, Fulfillment } from '@/components/fulfillment'
 import { PaymentMethod } from '@/components/payment-details'
 import { api } from '@/lib/axios'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
@@ -8,11 +8,38 @@ interface Customer {
     email: string
     name: string
     telephone: {
-    cpf: string
         number: string
     }
+    cpf: string
     billingAddress: Address
     shipmentAddress: Address
+}
+
+interface Item {
+    /* item: { */
+        sku: string
+        quantity: number
+        stockType: string
+        name: string
+        size: string
+        color: string
+        image: string
+        price: number
+    /* } */
+}
+
+interface Fulfillment {
+    id: string
+    status: 'PENDING' | 'DELIVERED' | 'SEPARATION'
+    name?: string
+    type?: string
+    freightCosts: FreightCosts
+    orderId: string
+    deliveryAddress?: Address
+    shipment: Address & {
+        name: string
+    }
+    items: Item[]
 }
 
 export interface DeliveryState {
@@ -32,15 +59,7 @@ export interface DeliveryState {
         pointOfSale: string
         createdAt: string
     } | null
-    fulfillments: {
-        id: string
-        status: 'PENDING' | 'DELIVERED' | 'SEPARATION'
-        name?: string
-        type?: string
-        freightCosts: FreightCosts
-        orderId: string
-        deliveryAddress?: Address
-    }[] | []
+    fulfillments: Fulfillment[]
 }
 
 const initialState: DeliveryState = {
@@ -49,7 +68,7 @@ const initialState: DeliveryState = {
     customerData: null,
     payments: null,
     orderDetails: null,
-    fulfillments: []
+    fulfillments: [] as Fulfillment[]
 }
 
 export const loadDelivery = createAsyncThunk('delivery/load', async () => {
@@ -65,7 +84,7 @@ export const loadDelivery = createAsyncThunk('delivery/load', async () => {
 
     const response = await Promise.all([id, status, customer, totals, payments, pointOfSale, createdAt, fulfillments, billingAddress])
     const result = response.map(value => value.data)
-    
+
     return result
 })
 
@@ -75,7 +94,7 @@ export const deliverySlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(loadDelivery.fulfilled, (state, action) => {
-            //console.log(action.payload)
+            
             const loadDeliveryState: DeliveryState = {
                 id: action.payload[0],
                 status: action.payload[1],
@@ -95,15 +114,15 @@ export const deliverySlice = createSlice({
                 fulfillments: Object.values(action.payload[7])
             }
 
-            /* state = {
-                ...loadDeliveryState
-            } */
-           state.id = loadDeliveryState.id
-           state.status = loadDeliveryState.status
-           state.customerData = loadDeliveryState.customerData
-           state.payments = loadDeliveryState.payments
-           state.orderDetails = loadDeliveryState.orderDetails
-           state.fulfillments = loadDeliveryState.fulfillments
+            state.id = loadDeliveryState.id
+            state.status = loadDeliveryState.status
+            state.customerData = loadDeliveryState.customerData
+            state.payments = loadDeliveryState.payments
+            state.orderDetails = loadDeliveryState.orderDetails
+
+            state.fulfillments = loadDeliveryState.fulfillments.map(fulfillment => {
+                return { ...fulfillment, items: Object.values(fulfillment.items) }
+            })
         })
     }
 })
