@@ -53,7 +53,21 @@ export default {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
-  		}
+  		},
+		keyframes: {
+			slideDown: {
+				'0%': {height: '0'},
+				'100%': {height: 'var(--radix-collapsible-content-height)'},
+			},
+			slideUp: {
+				'0%': {height: 'var(--radix-collapsible-content-height)'},
+				'100%': {height: '0'},
+			}
+		},
+		animation: {
+			slideDown: 'slideDown .5s ease-in-out',
+			slideUp: 'slideUp .5s ease-in-out'
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],

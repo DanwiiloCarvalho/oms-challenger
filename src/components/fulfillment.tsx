@@ -55,7 +55,7 @@ export function Fulfillment({ index, orderId }: FulfillmentProps) {
                         </div>
                     </div>
                 </div>
-                <CollapsibleContent className="p-6 space-y-4 border-t lg:space-y-7">
+                <CollapsibleContent className="p-6 space-y-4 border-t lg:space-y-7 data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                     <h2 className="text-lg font-semibold text-zinc-900">Dados da Entrega</h2>
                     <div className="space-y-4 lg:flex lg:justify-start lg:flex-wrap lg:gap-x-24 lg:gap-y-6 lg:space-y-0">
                         <div>
