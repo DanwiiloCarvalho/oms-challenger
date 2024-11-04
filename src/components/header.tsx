@@ -25,20 +25,20 @@ export function Header({ orderId, orderStatus, fulfillments }: HeaderProps) {
                 <div></div>
             </div>
 
-            <div className="flex justify-between px-3 py-3 lg:justify-start lg:gap-10">
+            <div className="flex justify-between gap-5 px-3 py-3 lg:justify-start lg:gap-10">
                 <div className="flex flex-col gap-1">
                     <span className="text-zinc-400 text-sm font-semibold">Pedido</span>
                     <span>{ orderId }</span>
                 </div>
 
                 <div className="flex flex-col gap-1">
-                    <span className="text-zinc-400 text-sm font-semibold">Status do pedido</span>
+                    <span className="text-zinc-400 text-sm font-semibold truncate">Status do pedido</span>
                     <Status status={orderStatus} />
                 </div>
 
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 overflow-hidden">
                     <span className="text-zinc-400 text-sm font-semibold">Entregas relacionadas</span>
-                    <div className="flex justify-start items-center gap-2">
+                    <div className="flex justify-start items-center gap-2 overflow-x-scroll scroll-smooth lg:overflow-x-hidden">
                         {
                             fulfillments.map(value => <FulFillmentIcon key={value.id} fulfillmentId={value.id} />)
                         }
