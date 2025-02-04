@@ -21,7 +21,7 @@ export function Header({ orderId, orderStatus, fulfillments }: HeaderProps) {
     return (
         <header>
             <div className="flex border border-b-zinc-300">
-                <div className="pl-3 py-4 pr-20 border-r border-r-zinc-300 text-zinc-700 font-semibold text-lg">Tratamento de entregas</div>
+                <div className="pl-3 py-4 pr-20 border-r border-r-zinc-300 text-zinc-700 font-semibold text-lg"><h1>Tratamento de entregas</h1></div>
                 <div></div>
             </div>
 
