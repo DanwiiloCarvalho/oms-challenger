@@ -19,8 +19,8 @@ export function Status({ status = 'PENDING'}: StatusProps) {
             color = 'bg-cyan-500 border border-cyan-600'
             statusMsg = 'Separação'
             break;
-        default:
-            break;
+        /* default:
+            break; */
     }
     
     return (
