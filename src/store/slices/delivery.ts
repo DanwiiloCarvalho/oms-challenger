@@ -16,16 +16,14 @@ interface Customer {
 }
 
 interface Item {
-    /* item: { */
-        sku: string
-        quantity: number
-        stockType: string
-        name: string
-        size: string
-        color: string
-        image: string
-        price: number
-    /* } */
+    sku: string
+    quantity: number
+    stockType: string
+    name: string
+    size: string
+    color: string
+    image: string
+    price: number
 }
 
 interface Fulfillment {
@@ -72,18 +70,25 @@ const initialState: DeliveryState = {
 }
 
 export const loadDelivery = createAsyncThunk('delivery/load', async () => {
-    const id = await api.get('/id')
-    const status = await api.get('/status')
-    const customer = await api.get('/customer')
-    const billingAddress = await api.get('/billingAddress')
-    const payments = await api.get('/payments')
-    const pointOfSale = await api.get('/pointOfSale')
-    const createdAt = await api.get('/createdAt')
-    const fulfillments = await api.get('/fulfillments')
-    const totals = await api.get('/totals')
+    const id = api.get('/id')
+    const status = api.get('/status')
+    const customer = api.get('/customer')
+    const billingAddress = api.get('/billingAddress')
+    const payments = api.get('/payments')
+    const pointOfSale = api.get('/pointOfSale')
+    const createdAt = api.get('/createdAt')
+    const fulfillments = api.get('/fulfillments')
+    const totals = api.get('/totals')
 
     const response = await Promise.all([id, status, customer, totals, payments, pointOfSale, createdAt, fulfillments, billingAddress])
-    const result = response.map(value => value.data)
+
+    const result = response.map(value => {
+        const keys = Object.keys(value.data)
+        if (keys.length === 1) {
+            return value.data[keys[0]]
+        }
+        return { ...value.data }
+    })
 
     return result
 })
@@ -94,7 +99,7 @@ export const deliverySlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(loadDelivery.fulfilled, (state, action) => {
-            
+
             const loadDeliveryState: DeliveryState = {
                 id: action.payload[0],
                 status: action.payload[1],
